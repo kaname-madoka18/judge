@@ -1,17 +1,30 @@
 import os
+from os import path
 import sys
 from getopt import getopt
 
-def test_problem():
-    pass
+def manual_judge(resolution):
+    with open(resolution, "r") as fin:
+        print(fin.read())
+    return float(input("input the score: "))
+
+def test_problem(resolution ,test_files):
+    with open(path.join(test_files, "__cnt.txt"), "r") as fin:
+        cnt = int(fin.readline())
+    for i in range(1, cnt+1):
+        test_file = path.join(test_files, f"{i}.in")
+
 
 def test_submit(submit, tests, points = None):
     problems = os.listdir(tests)
     total_score = 0
     if points is None:
         points = [10/len(problems)]*len(problems)
-    for problem in problems:
-        if
+    for i, problem in enumerate(problems):
+        if test_problem(path.join(submit, problem), path.join(tests, problem)):
+            total_score += points[i]
+        else:
+            total_score += manual_judge(path.join(submit, problem))
 
 
 
